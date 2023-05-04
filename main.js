@@ -2,53 +2,27 @@ const URLcat = 'https://api.thecatapi.com/v1/images/search';
 const URLdog = 'https://api.thedogapi.com/v1/images/search';
 const API_URL = 'https://api.thecatapi.com/v1/images/search?limit=3';//query parameters 3 imagenes
 const button = document.querySelector('#reloadButton');
+const buttonDog = document.querySelector('#newDogButton');
+const images = document.querySelectorAll('.multiplesCat img');
 
-
-async function reload() {
-    try{
-        const response = await fetch(URLdog);
-        const data = await response.json();
-
-        const img = document.querySelector('img');
-        img.src = data[0].url;
-    }catch(error){
-        console.log('Ocurrió un error: ', error);
-    }
-}
-
-async function llamarURL() {
+async function getAndAssignImage(url) {
     try {
-        const response = await fetch(URLcat);
-        const data = await response.json();
-        
-        const img = document.querySelector('img');
-        img.src = data[0].url;
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      const img = document.querySelector('img');
+      img.src = data[0].url;
     } catch (error) {
-        console.log('Ocurrió un error: ', error); 
+      console.log('Ocurrió un error: ', error); 
     }
   }
-llamarURL();
-
-button.addEventListener('click', async () => {
-    try{
-        const response = await fetch(URLcat);
-        const data = await response.json();
-
-        const img = document.querySelector('img');
-        img.src = data[0].url;
-    }catch(error){
-        console.log('Ocurrió un error: ', error);
-    }
-});
-
-async function moreCats() {
+  
+  async function moreCats() {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
   
       console.log(data);
-      const images = document.querySelectorAll('.multiplesCat img');
-        console.log(images);
       images.forEach((img, index) => {
         img.src = data[index].url;
       });
@@ -58,4 +32,13 @@ async function moreCats() {
     }
   }
   
+  getAndAssignImage(URLcat);
+  
+  button.addEventListener('click', async () => {
+    await getAndAssignImage(URLcat);
+  });
+  
+  buttonDog.addEventListener('click', async () => {
+    await getAndAssignImage(URLdog);
+  });
   moreCats();

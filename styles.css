@@ -15,8 +15,9 @@ html {
     font-family: 'Roboto', sans-serif;
 }
 body{
-    height: 100vh;
+    
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: white;
@@ -45,7 +46,18 @@ p{
     font-size: 1.5rem;
 }
 
-img {
+.imgPrincipal{
+    max-width: 100%;
+    max-height: 300px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+}
+.multiplesCat {
+    margin: 1.5rem 0 1.5rem 0;
+    padding: 1.5rem 0 1.5rem 0;;
+}
+.multiplesCat img{
     max-width: 100%;
     max-height: 300px;
     border: none;

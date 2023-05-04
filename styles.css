@@ -1,0 +1,73 @@
+:root {
+    --blue: #0DA8FF;
+    --black: #252C34;
+    --soft-white: #F8F1F1;
+    --white: #fff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+section {
+    width: 80%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+}
+h1, button, p {
+    margin: 1.5rem 0 1.5rem 0;
+}
+
+h1{
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+p{
+    font-size: 1.5rem;
+}
+
+img {
+    max-width: 100%;
+    max-height: 300px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+}
+
+button {
+    background-color: #fff;
+    color: #555;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+    transition: all 0.2s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+    padding: 12px 24px;
+    font-size: 16px;
+
+  }
+  /* Neumorphis */
+  
+button:hover {
+    box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
+  }
+  

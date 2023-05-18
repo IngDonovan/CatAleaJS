@@ -46,7 +46,7 @@ p{
     font-size: 1.5rem;
 }
 
-.imgPrincipal{
+.imgPrincipal, .multiplesCat img, #randomCat img, #favorites img{
     max-width: 100%;
     max-height: 300px;
     border: none;
@@ -58,11 +58,7 @@ p{
     padding: 1.5rem 0 1.5rem 0;
 }
 .multiplesCat img{
-    max-width: 100%;
-    max-height: 300px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
+    
     margin: 1.5rem 0 1.5rem 0;
 }
 

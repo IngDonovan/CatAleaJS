@@ -53,7 +53,7 @@ p{
     border-radius: 10px;
     box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
 }
-.multiplesCat {
+.multiplesCat, #randomCat, #favorites {
     margin: 1.5rem 0 1.5rem 0;
     padding: 1.5rem 0 1.5rem 0;
 }

@@ -55,11 +55,25 @@ async function getAndAssignImage(url) {
     try {
       const response = await fetch(URLcats+FAVORITES+KEY);
       const status = response.status;
-      
       if (status !== 200) throw new Error(status);
       const data = await response.json();
       console.log('Favorites');
       console.log(data);
+      data.forEach(cat => {
+        const section = document.getElementById('favorites');
+        const article = document.createElement('article');
+        const img = document.createElement('img');
+        const btn = document.createElement('button');
+        const btnText = document.createTextNode('Borrar')
+        // cat.image.url
+        btn.appendChild(btnText);
+        img.src = cat.image.url
+
+        article.appendChild(img);
+        article.appendChild(btn);
+
+        section.appendChild(article);
+      })
       
     } catch (error) {
       console.log('Ocurrió un error: ', error.message);
@@ -102,6 +116,12 @@ async function getAndAssignImage(url) {
   buttonDog.addEventListener('click', async () => {
     await getAndAssignImage(URLdogs+RANDOM);
   });
+
+//   document.addEventListener("click", function(event){
+//     if (event.target.className == "random__button"){
+//         saveFavorite();
+//     }
+// }, false);
 
   loadFavorites();
   moreCats();

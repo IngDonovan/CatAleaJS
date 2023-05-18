@@ -1,7 +1,9 @@
-const URLcat = 'https://api.thecatapi.com/v1/images/search';
-const URLdog = 'https://api.thedogapi.com/v1/images/search';
-const API_URL = 'https://api.thecatapi.com/v1/images/search?limit=4&api_key=live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';//query parameters 3 imagenes
-const API_URL_FAVORITES = 'https://api.thecatapi.com/v1/favourites?limit=4';//query parameters 3 imagenes
+const URLcats = 'https://api.thecatapi.com/v1/';
+const URLdogs = 'https://api.thedogapi.com/v1/';
+const RANDOM = 'images/search?';
+const LIMIT_RANDOM ='limit=4';
+const FAVORITES ='favourites?';
+const KEY = '&api_key=live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';
 
 const button = document.querySelector('#reloadButton');
 const buttonDog = document.querySelector('#newDogButton');
@@ -29,7 +31,7 @@ async function getAndAssignImage(url) {
   
   async function moreCats() {
     try {
-      const response = await fetch(API_URL);
+      const response = await fetch(URLcats+RANDOM+LIMIT_RANDOM+KEY);
       const status = response.status;
 
       if (status !== 200) throw new Error(status);
@@ -49,11 +51,11 @@ async function getAndAssignImage(url) {
 
     }
   }
-  async function saveFavorites() {
+  async function loadFavorites() {
     try {
-      const response = await fetch(API_URL_FAVORITES);
+      const response = await fetch(URLcats+FAVORITES+KEY);
       const status = response.status;
-
+      
       if (status !== 200) throw new Error(status);
       const data = await response.json();
       console.log('Favorites');
@@ -65,15 +67,42 @@ async function getAndAssignImage(url) {
     }
   }
 
+  let rawBody = JSON.stringify({ 
+    "image_id": "wJyw82pIl"
+    //"sub_id":"user-123"
+     });
+
+  async function saveFavorites() {
+    try {
+      const response = await fetch(URLcats+FAVORITES+KEY, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},// tipo de archivo de la solicitud
+        body: rawBody
+      });
+      const status = response.status;
+      if (status !== 200) throw new Error(status);
+      const data = await response.json();
+      console.log('save');
+      console.log(response);
+      console.log(data);
+      
+    } catch (error) {
+      console.log('Ocurrió un error: ', error.message);
+      spanError.innerHTML = `<img src="https://http.cat/${error.message}" alt="Error">`;
+    }
+  }
+
   
-  getAndAssignImage(URLcat);
+  getAndAssignImage(URLcats+RANDOM);
   
   button.addEventListener('click', async () => {
-    await getAndAssignImage(URLcat);
+    await getAndAssignImage(URLcats+RANDOM);
   });
   
   buttonDog.addEventListener('click', async () => {
-    await getAndAssignImage(URLdog);
+    await getAndAssignImage(URLdogs+RANDOM);
   });
+
+  loadFavorites();
   moreCats();
-  saveFavorites();
+  

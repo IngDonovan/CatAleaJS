@@ -68,13 +68,17 @@ async function getAndAssignImage(url) {
       const data = await response.json();
       console.log('Favorites');
       console.log(data);
+
+      const section = document.getElementById('favorites');
+      section.innerHTML = ''; // Vaciar el contenido del contenedor antes de agregar nuevas imágenes
+
       data.forEach(cat => {
-        const section = document.getElementById('favorites');
+
         const article = document.createElement('article');
         const img = document.createElement('img');
         const btn = document.createElement('button');
         const btnText = document.createTextNode('Borrar')
-        // cat.image.url
+        
         btn.appendChild(btnText);
         img.src = cat.image.url
 
@@ -91,6 +95,30 @@ async function getAndAssignImage(url) {
   }
 
   async function saveFavorites(id) {
+    try {
+      const response = await fetch(URLcats+FAVORITES+KEY, {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},// tipo de archivo de la solicitud
+        body: JSON.stringify({ 
+          "image_id": `${id}`
+          //"sub_id":"user-123"
+           })
+      });
+      const status = response.status;
+      if (status !== 200) throw new Error(status);
+      const data = await response.json();
+      console.log('save');
+      console.log(response);
+      console.log(data);
+      loadFavorites();
+      
+    } catch (error) {
+      console.log('Ocurrió un error: ', error.message);
+      spanError.innerHTML = `<img src="https://http.cat/${error.message}" alt="Error">`;
+    }
+  }
+
+  async function deleteFavorites(id) {
     try {
       const response = await fetch(URLcats+FAVORITES+KEY, {
         method: 'POST',

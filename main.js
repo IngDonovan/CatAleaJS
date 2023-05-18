@@ -2,7 +2,8 @@ const URLcats = 'https://api.thecatapi.com/v1/';
 const URLdogs = 'https://api.thedogapi.com/v1/';
 const RANDOM = 'images/search?';
 const LIMIT_RANDOM ='limit=4';
-const FAVORITES ='favourites?';
+const FAVORITES ='favourites';
+const VARIA = '?';
 const KEY = '&api_key=live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';
 
 const button = document.querySelector('#reloadButton');
@@ -62,7 +63,7 @@ async function getAndAssignImage(url) {
   }
   async function loadFavorites() {
     try {
-      const response = await fetch(URLcats+FAVORITES+KEY);
+      const response = await fetch(URLcats+FAVORITES+VARIA+KEY);
       const status = response.status;
       if (status !== 200) throw new Error(status);
       const data = await response.json();
@@ -79,12 +80,13 @@ async function getAndAssignImage(url) {
         const btn = document.createElement('button');
         const btnText = document.createTextNode('Borrar')
         
-        btn.appendChild(btnText);
         img.src = cat.image.url
+        btn.appendChild(btnText);
+
+        btn.onclick = () => deleteFavorites(cat.id);
 
         article.appendChild(img);
         article.appendChild(btn);
-
         section.appendChild(article);
       })
       
@@ -96,7 +98,7 @@ async function getAndAssignImage(url) {
 
   async function saveFavorites(id) {
     try {
-      const response = await fetch(URLcats+FAVORITES+KEY, {
+      const response = await fetch(URLcats+FAVORITES+VARIA+KEY, {
         method: 'POST',
         headers: {'content-type': 'application/json'},// tipo de archivo de la solicitud
         body: JSON.stringify({ 
@@ -120,18 +122,14 @@ async function getAndAssignImage(url) {
 
   async function deleteFavorites(id) {
     try {
-      const response = await fetch(URLcats+FAVORITES+KEY, {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},// tipo de archivo de la solicitud
-        body: JSON.stringify({ 
-          "image_id": `${id}`
-          //"sub_id":"user-123"
-           })
+      const response = await fetch(URLcats+FAVORITES+'/'+id+VARIA+KEY, {
+        method: 'DELETE',
+        
       });
       const status = response.status;
       if (status !== 200) throw new Error(status);
       const data = await response.json();
-      console.log('save');
+      console.log('delete');
       console.log(response);
       console.log(data);
       loadFavorites();

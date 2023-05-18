@@ -8,9 +8,7 @@ const KEY = '&api_key=live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFS
 const button = document.querySelector('#reloadButton');
 const buttonDog = document.querySelector('#newDogButton');
 
-
-const images = document.querySelectorAll('.multiplesCat img');
-const imgFav = document.querySelectorAll('#randomCat img');
+const images = document.querySelectorAll('#randomCat img');
 const imgSaveFav = document.querySelectorAll('#favorites img');
 const spanError =document.querySelector('#beError');
 
@@ -41,11 +39,8 @@ async function getAndAssignImage(url) {
       const data = await response.json();
       console.log('MoreCats');
       console.log(data);
+      
       images.forEach((img, index) => {
-        img.src = data[index].url;
-  
-      });
-      imgFav.forEach((img, index) => {
         img.src = data[index].url;
         id = data[index].id;
         console.log(id);
@@ -111,6 +106,7 @@ async function getAndAssignImage(url) {
       console.log('save');
       console.log(response);
       console.log(data);
+      loadFavorites();
       
     } catch (error) {
       console.log('Ocurrió un error: ', error.message);
@@ -128,15 +124,6 @@ async function getAndAssignImage(url) {
   buttonDog.addEventListener('click', async () => {
     await getAndAssignImage(URLdogs+RANDOM);
   });
-
-
-
-//   document.addEventListener("click", function(event){
-//     if (event.target.className == "random__button"){
-//         saveFavorite();
-//     }
-// }, false);
-
-  loadFavorites();
-  moreCats();
   
+  moreCats();
+  loadFavorites();

@@ -7,11 +7,14 @@ const KEY = '&api_key=live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFS
 
 const button = document.querySelector('#reloadButton');
 const buttonDog = document.querySelector('#newDogButton');
+
+
 const images = document.querySelectorAll('.multiplesCat img');
 const imgFav = document.querySelectorAll('#randomCat img');
 const imgSaveFav = document.querySelectorAll('#favorites img');
 const spanError =document.querySelector('#beError');
 
+let id;
 
 async function getAndAssignImage(url) {
     try {
@@ -40,11 +43,22 @@ async function getAndAssignImage(url) {
       console.log(data);
       images.forEach((img, index) => {
         img.src = data[index].url;
+  
       });
       imgFav.forEach((img, index) => {
         img.src = data[index].url;
+        id = data[index].id;
+        console.log(id);
+        const saveButton = document.getElementById(`btn${index + 1}`);
+        saveButton.addEventListener('click', createSaveFavoritesHandler(id));
       });
-  
+      
+      function createSaveFavoritesHandler(id) {
+        return function () {
+          saveFavorites(id);
+          console.log(id);
+        };
+      }
     } catch (error) {
       console.log('Ocurrió un error: ', error.message);
       spanError.innerHTML = `<img src="https://http.cat/${error.message}" alt="Error">`;
@@ -81,17 +95,15 @@ async function getAndAssignImage(url) {
     }
   }
 
-  let rawBody = JSON.stringify({ 
-    "image_id": "wJyw82pIl"
-    //"sub_id":"user-123"
-     });
-
-  async function saveFavorites() {
+  async function saveFavorites(id) {
     try {
       const response = await fetch(URLcats+FAVORITES+KEY, {
         method: 'POST',
         headers: {'content-type': 'application/json'},// tipo de archivo de la solicitud
-        body: rawBody
+        body: JSON.stringify({ 
+          "image_id": `${id}`
+          //"sub_id":"user-123"
+           })
       });
       const status = response.status;
       if (status !== 200) throw new Error(status);
@@ -116,6 +128,8 @@ async function getAndAssignImage(url) {
   buttonDog.addEventListener('click', async () => {
     await getAndAssignImage(URLdogs+RANDOM);
   });
+
+
 
 //   document.addEventListener("click", function(event){
 //     if (event.target.className == "random__button"){

@@ -33,6 +33,26 @@ section {
     border-radius: 10px;
     box-shadow: 6px 6px 12px #b8b8b8, -6px -6px 12px #ffffff;
 }
+
+article {
+    position: relative;
+  }
+
+  article img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  
+article button {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
 h1, button, p {
     margin: 1.5rem 0 1.5rem 0;
 }
@@ -81,3 +101,20 @@ button:hover {
     box-shadow: 4px 4px 8px #b8b8b8, -4px -4px 8px #ffffff;
   }
   
+  @media only screen and (min-width: 600px) {
+    #randomCat, #favorites {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        justify-content: center;
+      
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    #randomCat, #favorites {
+        
+        grid-template-columns: repeat(3, 1fr);
+        
+    }
+  }

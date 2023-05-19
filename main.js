@@ -5,6 +5,7 @@ const LIMIT_RANDOM ='limit=4';
 const FAVORITES ='favourites';
 const VARIA = '?';
 const KEY = 'live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';
+const UPLOADIMG = 'images/upload'
 
 const button = document.querySelector('#reloadButton');
 const buttonDog = document.querySelector('#newDogButton');
@@ -62,7 +63,7 @@ async function loadFavorites() {
     });
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
-    console.log('Favorites');
+    console.log('Favorites Load');
     console.log(data);
 
     const section = document.getElementById('favorites');
@@ -102,7 +103,7 @@ async function saveFavorites(id) {
     });
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
-    console.log('save');
+    console.log('save in favorites');
     console.log(response);
     console.log(data);
     loadFavorites();
@@ -119,9 +120,39 @@ async function deleteFavorites(id) {
     });
     if (!response.ok) throw new Error(response.status);
     const data = await response.json();
-    console.log('delete');
+    console.log('delete to favorites');
     console.log(response);
     console.log(data);
+    loadFavorites();
+  } catch (error) {
+    console.log('Ocurrió un error: ', error.message);
+    spanError.innerHTML = `<img src="https://http.cat/${error.message}" alt="Error">`;
+  }
+}
+
+async function uploadPhoto() {
+  
+  try {
+    const form = document.querySelector('#uploadingForm');
+    const formData = new FormData(form);
+  
+    console.log(formData.get('file'));
+    const response = await fetch(`${URLcats}${UPLOADIMG}`, {
+      method: 'POST',
+      headers: {
+        // 'content-type': 'multipart/form-data',
+        'X-API-KEY': KEY,
+      },
+      body: formData,
+    });
+    if (!response.ok) throw new Error(response.status);
+    const data = await response.json();
+    console.log('Subido');
+    console.log(response);
+    console.log(data);
+    console.log(data.url);
+    
+    saveFavorites(data.id);
     loadFavorites();
   } catch (error) {
     console.log('Ocurrió un error: ', error.message);
@@ -139,5 +170,18 @@ buttonDog.addEventListener('click', async () => {
   await getAndAssignImage(`${URLdogs}${RANDOM}`);
 });
 
+// const previewImage = async () => {
+//   const file = document.getElementById("file").files;
+//   console.log(file);
+//   if (file.length > 0) {
+//     const fileReader = new FileReader();
+
+//     fileReader.onload = function(e) {
+//       document.getElementById("preview").setAttribute("src", e.target.result);
+//     };
+//     fileReader.readAsDataURL(file[0]);
+//   }
+// }
+// previewImage();
 moreCats();
 loadFavorites();

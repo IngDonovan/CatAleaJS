@@ -44,7 +44,7 @@ async function moreCats() {
     images.forEach((img, index) => {
       img.src = data[index].url;
       const id = data[index].id;
-      console.log(id);
+      //console.log(id);
       const saveButton = document.getElementById(`btn${index + 1}`);
       saveButton.addEventListener('click', () => createSaveFavoritesHandler(id));
     });

@@ -7,6 +7,11 @@ const VARIA = '?';
 const KEY = 'live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';
 const UPLOADIMG = 'images/upload'
 
+const apiCAT = axios.create({
+baseURL: URLcats,
+});
+apiCAT.defaults.headers.common['X-API-KEY'] = KEY;
+
 const button = document.querySelector('#reloadButton');
 const buttonDog = document.querySelector('#newDogButton');
 
@@ -91,21 +96,32 @@ async function loadFavorites() {
 
 async function saveFavorites(id) {
   try {
-    const response = await fetch(`${URLcats}${FAVORITES}`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'X-API-KEY': KEY,
-      },
-      body: JSON.stringify({
-        image_id: id,
-      }),
-    });
-    if (!response.ok) throw new Error(response.status);
-    const data = await response.json();
-    console.log('save in favorites');
-    console.log(response);
+    //con axios:
+    const {data, status} = await apiCAT.post(FAVORITES, {
+      image_id: id,
+    });//response ya tiene automaticamente a data por dentro
+    
+    console.log(status);
     console.log(data);
+    if (status !== 200 ) throw new Error(status);
+    console.log('save in favorites with axios');
+
+    // const response = await fetch(`${URLcats}${FAVORITES}`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     'X-API-KEY': KEY,
+    //   },
+    //   body: JSON.stringify({
+    //     image_id: id,
+    //   }),
+    // });
+    //if (!response.ok) throw new Error(response.status);
+    // const data = await response.json();
+
+    //console.log('save in favorites');
+    // console.log(response);
+    // console.log(data);
     loadFavorites();
   } catch (error) {
     console.log('Ocurrió un error: ', error.message);

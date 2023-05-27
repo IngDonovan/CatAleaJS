@@ -4,7 +4,7 @@ const RANDOM = 'images/search?';
 const LIMIT_RANDOM ='limit=4';
 const FAVORITES ='favourites';
 const VARIA = '?';
-const KEY = 'live_6agBLVVqmOqSNnQXbs6ly0H0OcK6vNfqzPqcIkBoSj8isN0HJGcFSKojyQGGpOGU';
+const KEY = 'live_LK7cji5rGbKJtBqWMLkpIzBtmZbR1IqETKrn9SA4dNJauaV400MYUxtkZuQf4oSc';
 const UPLOADIMG = 'images/upload'
 
 const apiCAT = axios.create({
